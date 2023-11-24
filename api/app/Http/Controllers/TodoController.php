@@ -46,7 +46,7 @@ class TodoController extends Controller
     {
         $todo = Todo::find($id);
 
-        if(auth()->user()->id !== $todo->user_id)
+        if(auth()->user()->id != $todo->user_id)
         {
             return response()->json([
                 'status' => 'error',
@@ -69,7 +69,7 @@ class TodoController extends Controller
 
         $todo = Todo::find($id);
 
-        if(auth()->user()->id !== $todo->user_id)
+        if(auth()->user()->id != $todo->user_id)
         {
             return response()->json([
                 'status' => 'error',
@@ -93,7 +93,7 @@ class TodoController extends Controller
         $todo = Todo::find($id);
 
 
-        if(auth()->user()->id !== $todo->user_id)
+        if(auth()->user()->id != $todo->user_id)
         {
             return response()->json([
                 'status' => 'error',
