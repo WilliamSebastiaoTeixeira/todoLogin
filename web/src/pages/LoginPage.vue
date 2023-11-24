@@ -38,7 +38,23 @@
             @keydown.enter.prevent="onClick"
           />
           <q-input
-            v-model="form.senha"
+            v-if="registrar"
+            v-model="form.name"
+            outlined
+            placeholder="Nome"
+            dense
+            autocorrect="off"
+            autocapitalize="off"
+            autocomplete="username"
+            bg-color="white"
+            :rules="[
+              () => !v$.name.required.$invalid || 'O nome é obrigatório.',
+            ]"
+            @keydown.enter.prevent="onClick"
+          />
+
+          <q-input
+            v-model="form.password"
             outlined
             placeholder="Senha"
             :type="mostrarSenha ? 'text' : 'password'"
@@ -48,10 +64,10 @@
             autocomplete="current-password"
             bg-color="white"
             :rules="[
-              () => !v$.senha.required.$invalid || 'A senha é obrigatória.',
+              () => !v$.password.required.$invalid || 'A senha é obrigatória.',
               () =>
-                !v$.senha.minLength.$invalid ||
-                'A senha deve ter no mínimo 8 caracteres.',
+                !v$.password.minLength.$invalid ||
+                'A senha deve ter no mínimo 6 caracteres.',
             ]"
             @keydown.enter.prevent="onClick()"
           >
@@ -60,34 +76,6 @@
                 :name="mostrarSenha ? 'las la-eye-slash' : 'las la-eye'"
                 class="cursor-pointer"
                 @click="mostrarSenha = !mostrarSenha"
-              />
-            </template>
-          </q-input>
-
-          <q-input
-            v-if="registrar"
-            v-model="form.confirmarSenha"
-            outlined
-            placeholder="Confirmar senha"
-            :type="mostrarConfirmarSenha ? 'text' : 'password'"
-            dense
-            autocorrect="off"
-            autocapitalize="off"
-            autocomplete="current-password"
-            bg-color="white"
-            :rules="[
-              () => !v$.confirmarSenha.required.$invalid || 'A confirmação de senha é obrigatória.',
-              () =>
-                !v$.confirmarSenha.sameAs.$invalid ||
-                'A senhas devem ser iguais.',
-            ]"
-            @keydown.enter.prevent="onClick"
-          >
-            <template #append>
-              <q-icon
-                :name="mostrarConfirmarSenha ? 'las la-eye-slash' : 'las la-eye'"
-                class="cursor-pointer"
-                @click="mostrarConfirmarSenha = !mostrarConfirmarSenha"
               />
             </template>
           </q-input>
@@ -120,13 +108,12 @@ const services = useServices()
 const auth = useAuthenticationStore()
 
 const mostrarSenha = ref(false)
-const mostrarConfirmarSenha = ref(false)
 const registrar = ref(false)
 
 const form = reactive({
   email: '',
-  senha: '',
-  confirmarSenha: ''
+  name: '',
+  password: '',
 })
 
 const rules = computed(() => ({
@@ -135,14 +122,13 @@ const rules = computed(() => ({
     email
   },
 
-  senha: {
-    required,
-    minLength: minLength(8),
+  name: {
+    required: requiredIf(registrar.value)
   },
 
-  confirmarSenha: {
-    required: requiredIf(registrar.value),
-    sameAs: sameAs(form.senha),
+  password: {
+    required,
+    minLength: minLength(6),
   },
 }))
 
@@ -152,7 +138,7 @@ async function onClick() {
 
   if(registrar.value) {
     try{
-      await services.loginService.register(form)
+      await services.authService.register(form)
     }catch(e){
       console.error(e)
     }
@@ -160,9 +146,9 @@ async function onClick() {
   }
   
   try{
-    const data = await services.loginService.login({ 
+    const data = await services.authService.login({ 
       email: form.email, 
-      senha: form.senha
+      password: form.password
     })
     auth.setUsuario(data.usuario)
     auth.setToken(data.token)

@@ -1,8 +1,8 @@
-import LoginService from '../services/LoginService'
+import AuthService from '../services/AuthService'
 
 
 export function useServices() {
   return {
-    loginService: new LoginService(),
+    authService: new AuthService(),
   }
 }

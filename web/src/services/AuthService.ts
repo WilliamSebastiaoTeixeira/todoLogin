@@ -2,18 +2,18 @@ import { http } from './index'
 
 export interface LoginRequest {
   email: string
-  senha: string
+  password: string
 }
 
 export interface RegisterRequest {
   email: string
-  senha: string
-  confirmarSenha: string
+  name: string
+  password: string
 }
 
 export interface Usuario {
-  _id?: string
-  email: string
+  email: string,
+  name: string
 }
 
 export interface LoginResponse {
@@ -21,14 +21,14 @@ export interface LoginResponse {
   usuario: Usuario
 }
 
-export default class LoginService {
+export default class AuthService {
   async login(params: LoginRequest): Promise<LoginResponse> {
     const { data } = await http.post('/login', params)
     return data
   }
 
   async register(params: RegisterRequest): Promise<any>{
-    const { data } = await http.post('/registrar', params)
+    const { data } = await http.post('/register', params)
     return data
   }
 }
