@@ -6,7 +6,7 @@
     <q-header class="header-shadow">
       <q-toolbar class="bg-white text-primary q-pa-md no-shadow">
         <q-toolbar-title class="row text-white items-center q-gutter-x-md">
-          <span class="label-subtitle">To Do List</span>
+          <span class="label-subtitle">Lista de tarefas do usuário {{ auth.usuario?.name }}</span>
         </q-toolbar-title>
 
         <div class="q-gutter-x-sm">
