@@ -138,9 +138,14 @@ async function onClick() {
 
   if(registrar.value) {
     try{
-      await services.authService.register(form)
+      const data = await services.authService.register(form)
+      console.log(data)
+      auth.setUsuario(data.user)
+      auth.setToken(data.authorisation.token)
     }catch(e){
       console.error(e)
+    }finally {
+      router.push('/home')
     }
     return
   }
@@ -150,8 +155,8 @@ async function onClick() {
       email: form.email, 
       password: form.password
     })
-    auth.setUsuario(data.usuario)
-    auth.setToken(data.token)
+    auth.setUsuario(data.user)
+    auth.setToken(data.authorisation.token)
   } catch(e) {
     console.error(e)
   } finally {

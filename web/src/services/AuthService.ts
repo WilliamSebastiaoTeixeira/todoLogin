@@ -12,13 +12,28 @@ export interface RegisterRequest {
 }
 
 export interface Usuario {
-  email: string,
+  id: number
+  email: string
   name: string
+  created_at: Date
+  updated_at: Date
+  email_verified_at: Date | null
+}
+export interface Authorisation {
+  token: string
+  type: string
+}
+export interface LoginResponse {
+  authorisation: Authorisation
+  user: Usuario
+  status: string
 }
 
-export interface LoginResponse {
-  token: string,
-  usuario: Usuario
+export interface RegisterResponse {
+  authorisation: Authorisation
+  user: Usuario
+  message: string
+  status: string
 }
 
 export default class AuthService {
@@ -27,7 +42,7 @@ export default class AuthService {
     return data
   }
 
-  async register(params: RegisterRequest): Promise<any>{
+  async register(params: RegisterRequest): Promise<RegisterResponse>{
     const { data } = await http.post('/register', params)
     return data
   }

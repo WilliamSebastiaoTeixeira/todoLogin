@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import type { Ref } from 'vue'
 
-import { Usuario } from '../services/LoginService'
+import { Usuario } from '../services/AuthService'
 
 const tokenFromStorage: string | undefined = localStorage.getItem('token') ?? undefined
 
