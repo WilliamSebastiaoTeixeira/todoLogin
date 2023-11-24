@@ -116,7 +116,7 @@ import ItemTarefa from '../components/ItemTarefa.vue'
 const services = useServices()
 
 const todos = ref<Todo[]>([])
-const todo = ref<Omit<Todo, 'id'>>({title: '', description: ''})
+const todo = ref<Omit<Todo, 'id' | 'user_id'>>({title: '', description: ''})
 const adding  =  ref(false)
 const loading = ref(false)
 

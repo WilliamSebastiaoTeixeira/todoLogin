@@ -14,7 +14,8 @@ class TodoController extends Controller
 
     public function index()
     {
-        $todos = Todo::all();
+        $todos = Todo::where('user_id','=', auth()->user()->id)->get();
+
         return response()->json([
             'status' => 'success',
             'todos' => $todos,
@@ -29,6 +30,7 @@ class TodoController extends Controller
         ]);
 
         $todo = Todo::create([
+            'user_id' => auth()->user()->id,
             'title' => $request->title,
             'description' => $request->description,
         ]);
@@ -43,6 +45,15 @@ class TodoController extends Controller
     public function show($id)
     {
         $todo = Todo::find($id);
+
+        if(auth()->user()->id !== $todo->user_id)
+        {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Erro ao atualizar',
+            ]);
+        }
+
         return response()->json([
             'status' => 'success',
             'todo' => $todo,
@@ -57,6 +68,15 @@ class TodoController extends Controller
         ]);
 
         $todo = Todo::find($id);
+
+        if(auth()->user()->id !== $todo->user_id)
+        {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Erro ao atualizar',
+            ]);
+        }
+
         $todo->title = $request->title;
         $todo->description = $request->description;
         $todo->save();
@@ -71,6 +91,16 @@ class TodoController extends Controller
     public function destroy($id)
     {
         $todo = Todo::find($id);
+
+
+        if(auth()->user()->id !== $todo->user_id)
+        {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Erro ao deletar',
+            ]);
+        }
+
         $todo->delete();
 
         return response()->json([

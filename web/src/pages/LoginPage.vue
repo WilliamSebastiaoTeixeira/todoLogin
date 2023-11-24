@@ -139,7 +139,6 @@ async function onClick() {
   if(registrar.value) {
     try{
       const data = await services.authService.register(form)
-      console.log(data)
       auth.setUsuario(data.user)
       auth.setToken(data.authorisation.token)
     }catch(e){

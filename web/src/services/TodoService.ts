@@ -1,6 +1,7 @@
 import { http } from './index'
 
 export interface Todo{
+  user_id: string
   id: number
   title: string
   description: string
@@ -45,7 +46,7 @@ export default class TodoService {
     return data
   }
 
-  async create(todo: Omit<Todo, 'id'>): Promise<CreateResponse> {
+  async create(todo: Omit<Todo, 'id'  | 'user_id'>): Promise<CreateResponse> {
     const { data } = await http.post('/todo', todo)
     return data
   }
