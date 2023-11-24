@@ -11,7 +11,7 @@
       />
       <div
         v-else
-        class="text-grey-9"
+        class="row items-center text-grey-9"
       >
         <span>
           {{ todo.title}}
@@ -30,7 +30,7 @@
       />
       <div
         v-else
-        class="text-grey-9"
+        class="row items-center text-grey-9"
       >
         <span>
           {{ todo.description}}
@@ -98,14 +98,14 @@ import { ref } from 'vue'
 
 import type { Todo } from '../services/TodoService'
 
-defineProps<{
+const props = defineProps<{
   item: Todo
 }>()
 
 const emit = defineEmits(['deletar', 'atualizar'])
   
 const editing = ref(false)
-const todo = ref<Todo>({id: 0, title: '', description: ''})
+const todo = ref<Todo>(props.item)
 
 function save() {
   editing.value = false

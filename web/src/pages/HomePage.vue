@@ -5,12 +5,6 @@
       class="column"
       style="width: 700px"
     >
-      <div class="row justify-center q-mb-sm ">
-        <span class="text-bold text-primary text-h3">
-          Lista de tarefas
-        </span>
-      </div>
-
       <div
         v-if="loading"
         class="q-mt-lg column items-center justify-center q-pa-lg"
@@ -32,7 +26,7 @@
             :item="item"
             :class="index !== todos.length - 1 ? 'q-mb-sm' : ''"
             @deletar="onDelete"
-            @saveEdit="onUpdate"
+            @atualizar="onUpdate"
           />
 
           <div
@@ -132,15 +126,18 @@ async function listTodo(){
 }
 
 async function onCreate(){
-  console.log(todo.value)
+  await services.todoService.create(todo.value)
+  listTodo()
 }
 
 async function onDelete(id: string){
-  console.log(id)
+  await services.todoService.delete(id)
+  listTodo()
 }
 
 async function onUpdate(todo: Todo){
-  console.log(todo)
+  await services.todoService.update(todo)
+  listTodo()
 }
 
 onMounted(() => {

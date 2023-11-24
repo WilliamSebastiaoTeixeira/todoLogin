@@ -45,13 +45,13 @@ export default class TodoService {
     return data
   }
 
-  async create(todo: Todo): Promise<CreateResponse> {
+  async create(todo: Omit<Todo, 'id'>): Promise<CreateResponse> {
     const { data } = await http.post('/todo', todo)
     return data
   }
 
   async update(todo: Todo): Promise<UpdateResponse>{
-    const { data } = await http.post(`/todo/${todo.id}`)
+    const { data } = await http.put(`/todo/${todo.id}`, todo)
     return data
   }
 
