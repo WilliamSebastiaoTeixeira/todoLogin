@@ -1,11 +1,10 @@
 cd api
 
-Configure o banco: 
-api/app/Config/Database.php
+Configure o banco no arquivo .env 
 
-php spark migrate
+php artisan migrate
 
-php spark serve
+php artisan jwt:secret
 
 ----------- 
 
