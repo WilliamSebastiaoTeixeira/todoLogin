@@ -27,7 +27,8 @@ export default class LoginService {
     return data
   }
 
-  async register(params: RegisterRequest): Promise<void>{
-    await http.post('/registrar', params)
+  async register(params: RegisterRequest): Promise<any>{
+    const { data } = await http.post('/registrar', params)
+    return data
   }
 }

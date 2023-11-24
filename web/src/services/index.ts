@@ -5,7 +5,7 @@ import { useAuthenticationStore } from '../stores/authentication'
 const auth = useAuthenticationStore()
 
 export const http = axios.create({
-  baseURL: `http://${window.location.hostname}:8080/`
+  baseURL: `http://localhost:8080/api/`
 })
 
 http.defaults.timeout = 300000

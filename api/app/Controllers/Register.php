@@ -15,8 +15,8 @@ class Register extends BaseController
     {
         $rules = [
             'email' => ['rules' => 'required|min_length[4]|max_length[255]|valid_email|is_unique[users.email]'],
-            'password' => ['rules' => 'required|min_length[8]|max_length[255]'],
-            'confirm_password'  => [ 'label' => 'confirm password', 'rules' => 'matches[password]']
+            'senha' => ['rules' => 'required|min_length[8]|max_length[255]'],
+            'confirmarSenha'  => [ 'label' => 'confirmar senha', 'rules' => 'matches[password]']
         ];
             
   
@@ -24,7 +24,7 @@ class Register extends BaseController
             $model = new UserModel();
             $data = [
                 'email'    => $this->request->getVar('email'),
-                'password' => password_hash($this->request->getVar('password'), PASSWORD_DEFAULT)
+                'password' => password_hash($this->request->getVar('senha'), PASSWORD_DEFAULT)
             ];
             $model->save($data);
              

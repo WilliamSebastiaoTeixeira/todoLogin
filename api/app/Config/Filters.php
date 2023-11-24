@@ -6,7 +6,9 @@ use CodeIgniter\Config\BaseConfig;
 use CodeIgniter\Filters\CSRF;
 use CodeIgniter\Filters\DebugToolbar;
 use CodeIgniter\Filters\Honeypot;
- 
+use Fluent\Cors\Filters\CorsFilter;
+use App\Filters\AuthFilter;
+
 class Filters extends BaseConfig
 {
     /**
@@ -19,7 +21,8 @@ class Filters extends BaseConfig
         'csrf'     => CSRF::class,
         'toolbar'  => DebugToolbar::class,
         'honeypot' => Honeypot::class,
-        'authFilter' => \App\Filters\AuthFilter::class,
+        'cors'     => CORSFilter::class,
+        'authFilter' => AuthFilter::class,
     ];
  
     /**
@@ -30,6 +33,10 @@ class Filters extends BaseConfig
      */
     public $globals = [
         'before' => [
+            'cors' => [
+                'before' => ['api/*'],
+                'after' => ['api/*']  
+            ],
             // 'honeypot',
             // 'csrf',
         ],
